@@ -1,0 +1,611 @@
+#!/bin/bash
+##CHILDREN:
+## none ... 
+## this is a free software 
+##if you do a modification 
+##please keep the history modification and send me (sollebac@gmail.com) a copy 
+##LAST MODIFICATION:
+##08 March     2009 at 15:52 by Cabellos JL
+##20 March     2009 at 21:36 by Cabellos JL
+##02 June      2009 at 11:21 by Cabellos JL
+##02 December  2009 at 20:03 by Cabellos JL 
+##18 Nov       2010 at 14:49 by Cabellos JL 
+##06 May       2013 at 10:37 by Cabellos JL
+##
+##
+## plots done with this script 
+## Phys. Rev. B 80, 155205 – Published 28 October 2009
+## 
+##
+##
+## if you are using debian system install:
+## apt-get0 install texlive-metapost
+## this going to solve all dependences ...Nov 18 2010  
+## tab completation 
+## apt-get install rlwrap
+## alias gnuplot='rlwrap -a -c gnuplot'
+RED='\e[0;31m'
+BLUE='\e[0;34m'
+BLU='\e[1;34m'
+CYAN='\e[0;36m'
+GREEN='\e[0;32m'
+GRE='\e[1;32m'
+YELLOW='\e[1;33m'
+NC='\e[0m' # No Color
+declare -a GFILES
+INPUT=`echo $1 | tr "[:upper:]" "[:lower:]"` 
+if [ "$INPUT" == "--help" ];then
+     printf "\t`dirname $0`/`basename $0` ${GREEN}--example1${NC}\n"
+     printf "\t`dirname $0`/`basename $0` ${GREEN}--example2${NC}\n"
+     printf "\t`dirname $0`/`basename $0` ${GREEN}--example3${NC}\n"
+     printf "\t${RED}Stoping right now ...${NC}\n"
+          exit 1
+fi 
+### 
+ ###
+if [ "$INPUT" == "--example1" ];then
+     rm -f parabola.dat
+     touch parabola.dat
+     for ((hh=-100;hh<=(100); hh++));do
+     let "aa=hh*hh"
+     aa=$(echo "scale=9; $hh*$hh*$hh*0.001" | bc)
+     echo "$hh   $aa" >>parabola.dat
+     done
+     ####
+     ## metapost
+     echo "## This a example of FILE.g " >  example1.g
+     echo "## Dont edit this file instead edit : `basename $0`" >>  example1.g
+     echo "## Any change here will be lost ..." >>  example1.g
+     echo "## There is not garanty: JL Cabellos-Quiroz" >>  example1.g
+     echo "## 02 Junio 2009 " >>  example1.g
+     echo "set term mp color solid latex magnification 1" >> example1.g
+     echo "set out 'fig.mp' " >> example1.g 
+     echo "set multiplot    " >> example1.g  
+     echo "set lmargin 15   " >> example1.g  
+     echo "set origin 0,1.5 " >> example1.g  
+     echo "#set size 1,1.61803399 ## golden ratio" >> example1.g
+     echo "set size 1.1,1.0 " >> example1.g    
+     echo "set ylabel '\\Large \$\\eta^{S,yyx}_{a}\$ [mC\$^3\$/J\$^2\$s\$^2\$]'"  >> example1.g
+      echo "set xlabel '\Large photon-energy (eV)'" >> example1.g      
+     echo "p 'parabola.dat' u 1:2 title 'Parabo' w l lt 1 lw 4 " >> example1.g
+  if [ -e example1.g ];then
+     printf "\t`dirname $0`/${GREEN}`basename $0${NC}` example1.g\n" 
+     `dirname $0`/`basename $0` example1.g ## great cabellos recursivo ...
+      exit 1
+  else 
+     printf "\tThere is a error in example1 ...\n"
+     printf "\tStop rigth now ..."
+     exit 1
+  fi 
+     printf "\t${GREEN}I found the end  OK${NC}\n" 
+     exit 1
+fi 
+ ### 
+ ###
+if [ "$INPUT" == "--example2" ];then
+     rm -f parabola.dat
+     touch parabola.dat
+     for ((hh=-100;hh<=(100); hh++));do
+     let "aa=hh*hh"
+     aa=$(echo "scale=9; $hh*$hh*$hh*0.001" | bc)
+     echo "$hh   $aa" >>parabola.dat
+     done
+     ####
+     ## metapost
+     echo "## This a example of FILE.g " >  example2.g
+     echo "## Dont edit this file instead edit `basename $0`" >>  example2.g
+     echo "## Any change here will be lost ..." >>  example2.g
+     echo "## There is not garanty: JL Cabellos-Quiroz" >>  example2.g
+     echo "## 02 Junio 2009 " >>  example2.g
+     echo "set term mp color solid latex magnification 1" >> example2.g
+     echo "set out 'fig.mp' " >> example2.g 
+     echo "set multiplot    " >> example2.g  
+     echo "set lmargin 15   " >> example2.g  
+     echo "set origin 0,1.5 " >> example2.g  
+     echo "#set size 1,1.61803399 ## golden ratio" >> example2.g  
+     echo "set size 1.1,1.0 " >> example2.g  
+     echo "unset xlabel " >> example2.g  
+     echo "set ylabel '\\Large \$\\eta^{S,yyx}_{a}\$ [mC\$^3\$/J\$^2\$s\$^2\$]' 0,-1 "  >> example2.g      
+     echo "p 'parabola.dat' u 1:2 t 'Parabolic' w l lt 1 lw 4 " >> example2.g
+     echo "set origin 0,.5 " >> example2.g
+     echo "set xlabel '\Large photon-energy (eV)' 0,-1" >> example2.g
+     echo "p 'parabola.dat' u 1:2 title 'Parab' w l lt 1 lw 4 " >> example2.g
+     
+
+  if [ -e example2.g ];then
+     printf "\t`dirname $0`/${GREEN}`basename $0${NC}` example1.g\n" 
+     `dirname $0`/`basename $0` example2.g ## great cabellos recursivo ...
+      exit 1
+  else 
+     printf "\tThere is a error in example1 ...\n"
+     printf "\tStop rigth now ..."
+     exit 1
+  fi 
+     printf "\t${GREEN}I found the end  OK${NC}\n" 
+     exit 1
+fi 
+ ### 
+ ###
+if [ "$INPUT" == "--example3" ];then
+     rm -f parabola.dat
+     touch parabola.dat
+     for ((hh=-100;hh<=(100); hh++));do
+     let "aa=hh*hh"
+     aa=$(echo "scale=9; $hh*$hh*$hh*0.001" | bc)
+     echo "$hh   $aa" >>parabola.dat
+     done
+     ####
+     ## metapost
+     echo "## This a example of FILE.g " >  example3.g
+     echo "## Dont edit this file instead edit `basename $0`" >>  example3.g
+     echo "## Any change here will be lost ..." >>  example3.g
+     echo "## There is not garanty: JL Cabellos-Quiroz" >>  example3.g
+     echo "## 02 Junio 2009 " >>  example3.g
+     echo "set term mp color solid latex magnification 1" >> example3.g
+     echo "set out 'fig.mp' " >> example3.g 
+     echo "set multiplot    " >> example3.g  
+     echo "set lmargin 15   " >> example3.g  
+     echo "set origin 0,2.5 " >> example3.g  
+     echo "#set size 1,1.61803399 ## golden ratio" >> example3.g  
+     echo "set size 1.1,1.0 " >> example3.g  
+     echo "unset xlabel " >> example3.g  
+     echo "set ylabel '\\Large \$\\eta^{S,yyx}_{a}\$ [mC\$^3\$/J\$^2\$s\$^2\$]' 0,-1 "  >> example3.g      
+     echo "p 'parabola.dat' u 1:2 t 'Parabolic' w l lt 1 lw 4 " >> example3.g
+     echo "set origin 0,1.55 " >> example3.g
+     echo "p 'parabola.dat' u 1:2 t 'Parabolic' w l lt 1 lw 4 " >> example3.g
+     echo "set origin 0,0.6 " >> example3.g
+     echo "set xlabel '\Large photon-energy (eV)' 0,-1" >> example3.g
+     echo "p 'parabola.dat' u 1:2 t 'Parabolic' w l lt 1 lw 4 " >> example3.g
+     
+
+  if [ -e example3.g ];then
+     printf "\t`dirname $0`/${GREEN}`basename $0${NC}` example1.g\n" 
+     `dirname $0`/`basename $0` example3.g ## great cabellos recursivo ...
+      exit 1
+  else 
+     printf "\tThere is a error in example1 ...\n"
+     printf "\tStop rigth now ..."
+     exit 1
+  fi 
+     printf "\t${GREEN}I found the end  OK${NC}\n" 
+     exit 1
+fi 
+
+
+
+
+
+
+
+
+color_echo(){
+# 1 -- color escape sequncy
+# 2 -- string
+# \033[0m -- reset color settings
+  echo -e "$1 $2 \033[0m"
+}
+
+#######
+#######
+
+test_return(){
+# 1 -- return code $?
+# 2 -- description of operation
+echo -e -n $2:
+COL=40
+# move cursor to column $COL 
+echo -en "\033[${COL}G"
+if [ $1 -eq 0 ] 
+then
+	color_echo $GREEN OK
+else
+	color_echo $RED FALSE
+	exit 1
+fi
+}
+
+
+##======================
+echo "#!/usr/bin/perl"        > /tmp/checkg.pl
+echo " use File::Basename; " >> /tmp/checkg.pl
+echo " use Cwd; "            >> /tmp/checkg.pl
+echo " use File::Copy; "     >> /tmp/checkg.pl
+echo " use Term::ANSIColor; " >> /tmp/checkg.pl
+echo " ## There is not warranty JL Cabellos "              >> /tmp/checkg.pl
+echo " ## create on: `date`  by $USER "                    >> /tmp/checkg.pl
+echo " ## Any change done here is going to lost ..."       >> /tmp/checkg.pl
+echo " ## better modificate `basename $0` atte. JL Cabellos " >> /tmp/checkg.pl
+echo " my \$minombre=basename(\$0); " >> /tmp/checkg.pl
+echo " my \$midir=dirname(\$0); " >> /tmp/checkg.pl
+echo " print \"\\t\$midir/\$minombre\\n\"; " >> /tmp/checkg.pl
+echo "my @information; "                                   >> /tmp/checkg.pl
+echo " my @VALIDFILES; "                                   >> /tmp/checkg.pl
+echo " if ((@ARGV=~0)){ "                                  >> /tmp/checkg.pl
+echo " print \"\\t Usage: checkg.pl [namefile.g] \\n\" ; " >> /tmp/checkg.pl
+echo "        die; "                                       >> /tmp/checkg.pl
+echo "    } "                                              >> /tmp/checkg.pl
+    ####
+echo    "  \$INFOABINIT=\$ARGV[0]; "                       >> /tmp/checkg.pl
+echo    "    my \$char = '#';      "                       >> /tmp/checkg.pl
+echo    " if ( -e \"\$INFOABINIT\" ){  "                   >> /tmp/checkg.pl
+echo    "print \"  \$INFOABINIT exist ... \\n\"; "         >> /tmp/checkg.pl
+echo    "}  "                                              >> /tmp/checkg.pl
+echo    "else {"                                           >> /tmp/checkg.pl
+echo    "         print color 'red'; "                     >> /tmp/checkg.pl
+echo    "         print \"not FILE=\$INFOABINIT \\n\"; "   >> /tmp/checkg.pl
+echo    "         print \"Make one... \\n\"; "             >> /tmp/checkg.pl
+echo    "         print color 'reset';  "                  >> /tmp/checkg.pl
+echo    "         die ;  "                                 >> /tmp/checkg.pl
+echo    "}   "                                             >> /tmp/checkg.pl
+#####" >> /tmp/checkg.pl
+echo    "         open(INFOABINIT) or die(\"Could not open $INFOABINIT file.\"); " >> /tmp/checkg.pl
+echo    "          {   "                                   >> /tmp/checkg.pl
+echo    "     foreach \$line (<INFOABINIT>) { "            >> /tmp/checkg.pl
+echo    "     my \$result = index(\$line, \$char); "       >> /tmp/checkg.pl
+echo    "     \$vari = substr(\$line, 0, \$result); "      >> /tmp/checkg.pl
+echo    "     if ((\$vari !~ /[\\#]/)) { "                 >> /tmp/checkg.pl
+echo    "        chomp(\$vari); "                          >> /tmp/checkg.pl
+echo    "          push @information, \$vari; "            >> /tmp/checkg.pl
+echo    "                                }  #end if "      >> /tmp/checkg.pl
+echo    "                                }  #end foreach " >> /tmp/checkg.pl
+echo    "                               }   #end open "    >> /tmp/checkg.pl
+######
+echo    "             \$lenpp=@information;         "      >> /tmp/checkg.pl
+echo    "            for (\$i=0; \$i<\$lenpp; \$i++)   "   >> /tmp/checkg.pl
+echo    "              {  "                                >> /tmp/checkg.pl
+echo    "              \$CADENA=(\$information[\$i]); "    >> /tmp/checkg.pl
+echo    "                                           "      >> /tmp/checkg.pl
+echo    "            if ((\$CADENA =~ m/\\'/) && (\$CADENA !~ m/set/)){ " >> /tmp/checkg.pl
+echo    "              my \$offset=0;  "                   >> /tmp/checkg.pl
+echo    "              my \$LOOKFOR = '\''; "              >> /tmp/checkg.pl
+echo    "              my \$LIMINF=index(\$CADENA, \$LOOKFOR, \$offset); " >> /tmp/checkg.pl
+echo    "              \$offset = \$LIMINF+1; "            >> /tmp/checkg.pl
+echo    "             my \$LIMSUP=index(\$CADENA, \$LOOKFOR, \$offset); " >> /tmp/checkg.pl
+echo    "              \$DELTA=\$LIMSUP-\$LIMINF; "        >> /tmp/checkg.pl
+echo    "              \$ARCHIVO=substr(\$CADENA, (\$LIMINF+1), \$DELTA-1); " >> /tmp/checkg.pl
+echo    "              push @VALIDFILES, \$ARCHIVO; "      >> /tmp/checkg.pl
+echo    "              } "                                 >> /tmp/checkg.pl
+echo    "          }     "                                 >> /tmp/checkg.pl
+##================================
+echo    "              \$LEN=@VALIDFILES;            "     >> /tmp/checkg.pl
+echo    "               for (\$i=0; \$i<\$LEN; \$i++){   " >> /tmp/checkg.pl
+echo    "                   \$FILEV=(\$VALIDFILES[\$i]); " >> /tmp/checkg.pl
+echo    "                   \$ii=\$i+1;                 "  >> /tmp/checkg.pl
+echo    "                 if (-e \$FILEV) {            "   >> /tmp/checkg.pl
+echo    "                 sleep(.5);            "   >> /tmp/checkg.pl
+echo    "                   print \" \$ii   \$FILEV [\";  " >> /tmp/checkg.pl
+echo    "                   print color 'green';      "    >> /tmp/checkg.pl
+echo    "                   print \"ok exists\";        "  >> /tmp/checkg.pl
+echo    "                   print color 'reset';      "    >> /tmp/checkg.pl
+echo    "                   print \"]\\n\";              " >> /tmp/checkg.pl
+echo    "                   } else {                  "    >> /tmp/checkg.pl
+echo    "                   print \" \$ii   \$FILEV [\";  " >> /tmp/checkg.pl
+echo    "                   print color 'red';        "    >> /tmp/checkg.pl
+echo    "                   print \"NOT exists\";       "  >> /tmp/checkg.pl
+echo    "                   print color 'reset';      "    >> /tmp/checkg.pl
+echo    "                   print \"]\\n\";              "   >> /tmp/checkg.pl
+echo    "                   system('touch errorPLOTLINE'); " >> /tmp/checkg.pl
+echo    "                 }   "                             >> /tmp/checkg.pl
+echo    "            } ##for  "                             >> /tmp/checkg.pl
+echo    " printf \"\\n\";         "                         >> /tmp/checkg.pl
+chmod 777              /tmp/checkg.pl
+
+#######################################
+#######################################
+echo    "\\documentclass[12pt]{article} " > /tmp/figlamp.tex
+echo    "\\usepackage{graphicx} " >> /tmp/figlamp.tex
+echo    "\\usepackage[dvips]{color} " >> /tmp/figlamp.tex
+#echo    "\\input{/Users/bms/util/definitions} " >> /tmp/figlamp.tex
+echo    "\\definecolor{blue577}{rgb}{.5,.75,.75} " >> /tmp/figlamp.tex
+echo    "\\definecolor{darkblue}{rgb}{0,0,.6} " >> /tmp/figlamp.tex
+echo    "\\definecolor{darkgreen}{rgb}{0,.6,0} " >> /tmp/figlamp.tex
+echo    "\\definecolor{lightblue}{rgb}{0,1,1} " >> /tmp/figlamp.tex
+echo    "\\definecolor{Lightblue}{rgb}{.8,1,1} " >> /tmp/figlamp.tex
+echo    "\\definecolor{orange}{rgb}{1,.5,0} " >> /tmp/figlamp.tex
+echo    "\\definecolor{gray}{gray}{.5} " >> /tmp/figlamp.tex
+echo    "\\definecolor{lightgray}{gray}{.75} " >> /tmp/figlamp.tex
+echo    "\\definecolor{darkgray}{gray}{.25} " >> /tmp/figlamp.tex
+#%@@@@@@@@
+#% PORTRAIT & Page Setup... chose orientation
+echo    "\\textwidth=6.5in \\textheight=9.5in " >> /tmp/figlamp.tex
+echo    "\\oddsidemargin=0in  " >> /tmp/figlamp.tex
+echo    "\\topmargin=-.7in  " >> /tmp/figlamp.tex
+echo    "\\headheight=0in " >> /tmp/figlamp.tex
+echo    "\\headsep=0.25in " >> /tmp/figlamp.tex
+echo    "\\topskip=0.0in " >> /tmp/figlamp.tex
+##%@@@@@
+echo    "\\pagestyle{empty} " >> /tmp/figlamp.tex
+echo    "\\setcounter{page}{1} " >> /tmp/figlamp.tex
+echo    "\\renewcommand{\\thepage}{Mendoza et al, Figure No. \\arabic{page}} " >> /tmp/figlamp.tex
+echo    "\\begin{document}" >> /tmp/figlamp.tex 
+echo    "\\begin{figure}  " >> /tmp/figlamp.tex
+echo    "\\begin{center}  " >> /tmp/figlamp.tex
+echo    "\\includegraphics[scale=1]{fig.0} " >> /tmp/figlamp.tex
+echo    "\\end{center}    " >> /tmp/figlamp.tex
+echo    "\\end{figure}    " >> /tmp/figlamp.tex
+echo    "\\end{document}  " >> /tmp/figlamp.tex
+
+
+
+
+
+#######################################
+#######################################
+DEPENDE[0]=gv
+DEPENDE[1]=gnuplot
+DEPENDE[2]=mpost
+DEPENDE[3]=pdfcrop
+DEPENDE[4]=pdftops
+#DEPENDE[5]=ps2epsi ## not esential 
+#DEPENDE[6]=dvips   ## not esential
+nohay=0
+NOMACHINESpmn=`echo ${#DEPENDE[@]}`
+for ((hh=0;hh<=($NOMACHINESpmn-1); hh++));do
+         FILE=${DEPENDE[$hh]}
+         EXISTE=`which $FILE`
+         if [ -z "$EXISTE" ];then  
+            nohay=1
+            printf "\t=================================\n"
+       printf "\tThe commnad: ${RED}$FILE${NC} not exist in your machine...\n"
+       printf "\tDownload it o do whatever need to fix it ... \n"
+         fi  
+ done 
+#### 
+ if [ $nohay -eq "1" ];then
+   printf "\t=================================\n"
+   printf "\tThis ${GREEN}`basename $0`${NC} application \n"
+   printf "\tneed all this commnads, check your dist. \n" 
+    NOMACHINESpmn=`echo ${#DEPENDE[@]}`
+ 
+ for ((hh=0;hh<=($NOMACHINESpmn-1); hh++));do
+          FILE=${DEPENDE[$hh]}
+        let "kk=hh+1"
+        printf "\t[$kk] $FILE\n"         
+  done 
+   printf "\t=================================\n"
+   exit 1
+   fi 
+######
+ PERMISO=`basename $0`
+## if [ ! -e /tmp/$PERMISO ];then 
+ NOMACHINESpmn=`echo ${#DEPENDE[@]}`
+for ((hh=0;hh<=($NOMACHINESpmn-1); hh++));do
+         FILE=${DEPENDE[$hh]}
+         EXISTE=`which $FILE`
+         if [ -z "$EXISTE" ];then  
+            nohay=1
+            printf "\t$FILE not exist I need ... \n"
+         else 
+          printf "\t$EXISTE [${GREEN}ok${NC}] \n"
+         fi  
+ done 
+# fi 
+#touch /tmp/$PERMISO
+
+
+ DONDEVIVO=`dirname $0`
+ 
+
+ printf "\t $PWD/$DONDEVIVO \n"
+ printf "\t `basename $0` ${GREEN}--help${NC} \n"
+ printf "\t `basename $0` ${GREEN}--HELP${NC}\n"
+ 
+ 
+
+
+  
+  if [ "$#" -eq 0 ];then
+   printf "\t ======================\n"
+   printf "\t`dirname $0`/${GREEN}`basename $0`${NC} \n"
+   printf "\t`pwd`\n"
+  ################
+  FILES="*.g"
+      ii=0
+      for file in $FILES; do
+       let "ii=ii+1"
+        if [ ! -e "$file" ];then       # Check if file exists
+         printf  "\t there are no files with *.g  !!!!!! \n"
+         printf "\t`dirname $0`/`basename $0` ${GREEN}--help${NC} \n"
+         printf "\t`dirname $0`/`basename $0` ${GREEN}--HELP${NC}\n"
+         printf "\t`dirname $0`/`basename $0` ${GREEN}--example1${NC}\n"
+         printf "\t`dirname $0`/`basename $0` ${GREEN}--example2${NC}\n"
+         printf "\t`dirname $0`/`basename $0` ${GREEN}--example3${NC}\n"
+         printf "\t${RED}Stoping right now ...${NC}\n"
+         exit 1
+        fi
+       GFILES[$ii]=$file
+      done
+      NOGFILES=`echo ${#GFILES[@]}`
+      printf "\t${BLUE}==========================${NC}\n"
+      for ((jj=1;jj<=($NOGFILES); jj++));do
+           #### parser 
+           #### parser 
+           ######################################################################
+################ parser parser parser parser parser ##################
+######################################################################
+    ENTRA=${GFILES[$jj]}
+ rm -f /tmp/perro.g
+ touch /tmp/perro.g
+cat $ENTRA | while read line; do
+    let "i=i+1"
+    #echo "$i line : $line"
+    echo "$line" >> /tmp/perro.g
+    #echo `expr index "$line" "#"`
+    #echo "$line"
+    #echo "$line" | tr " " "_"
+done
+rm -f /tmp/perro.limpio
+touch /tmp/perro.limpio
+cat /tmp/perro.g | while read line; do
+    let "i=i+1"
+    DONDE=`expr index "$line" "#"`
+     if [ "$DONDE" == "1" ];then
+       echo "$line comentario" > /tmp/basura
+     else 
+       echo "$line" >> /tmp/perro.limpio
+     fi  
+done
+
+#cat /tmp/perro.limpio | while read line; do
+#    let "i=i+1"
+#    echo "$line"
+#done
+
+#TERMINO=`grep term /tmp/perro.limpio` 
+#echo este  `expr match "$TERMINO" 'mp'`
+# 
+#echo $TERMINO 
+#grep term /tmp/perro.limpio  
+#exit 1 
+######################################################################
+################ parser parser parser parser parser ##################
+######################################################################
+           #### parser 
+           #### parser 
+          printf "\t[${GREEN}$jj${NC}] ${GFILES[$jj]}  [ ${GREEN}`grep term /tmp/perro.limpio` ${NC}] \n"
+     done
+      printf "\t${BLUE}==========================${NC}\n"
+      printf "\t(This program ${GREEN}`basename $0`${NC} works with metapost)\n"
+      printf "\tChoose one file: ?? \n"
+      read FILECHO
+       if [ -z $FILECHO ];then
+        printf "\t`dirname $0`/`basename $0` ${GREEN}--help${NC} \n"
+        printf "\t`dirname $0`/`basename $0` ${GREEN}--HELP${NC}\n"
+        printf "\t`dirname $0`/`basename $0` ${GREEN}--example1${NC}\n"
+        printf "\t`dirname $0`/`basename $0` ${GREEN}--example2${NC}\n"
+        printf "\t`dirname $0`/`basename $0` ${GREEN}--example3${NC}\n"
+        printf "\t${RED}Stoping right now ...${NC}\n"
+        exit 1
+       fi     
+       printf "\t${GFILES[$FILECHO]}\n"
+      INPUTFILE=${GFILES[$FILECHO]}
+  else
+  INPUTFILE=$1
+  fi 
+######################################################################
+################ parser parser parser parser parser ##################
+######################################################################
+# rm -f /tmp/perro.g
+# touch /tmp/perro.g
+#cat $INPUTFILE | while read line; do
+#    let "i=i+1"
+#    #echo "$i line : $line"
+#    echo "$line" >> /tmp/perro.g
+#    #echo `expr index "$line" "#"`
+#    #echo "$line"
+#    #echo "$line" | tr " " "_"
+#done
+#rm -f /tmp/perro.limpio
+#touch /tmp/perro.limpio
+#cat /tmp/perro.g | while read line; do
+#    let "i=i+1"
+#    DONDE=`expr index "$line" "#"`
+#     if [ "$DONDE" == "1" ];then
+#       echo "$line comentario" > /tmp/basura
+#     else 
+#       echo "$line" >> /tmp/perro.limpio
+#     fi  
+#done
+
+#cat /tmp/perro.limpio | while read line; do
+#    let "i=i+1"
+#    echo "$line"
+#done
+
+#TERMINO=`grep term /tmp/perro.limpio` 
+#echo este  `expr match "$TERMINO" 'mp'`
+# 
+#echo $TERMINO 
+#grep term /tmp/perro.limpio  
+#exit 1 
+######################################################################
+################ parser parser parser parser parser ##################
+######################################################################
+###########################
+###########################
+###########################
+###########################
+  if [ -e $INPUTFILE ];then
+   TRUEFILE=$INPUTFILE
+  fi
+  if [ -e $INPUTFILE.g ];then
+   TRUEFILE=$INPUTFILE.g
+  fi 
+  if [ -e $INPUTFILE"g" ];then
+   TRUEFILE=$INPUTFILE"g"
+  fi
+##=========================================
+if [ ! -e $INPUTFILE.g  ] && [ ! -e $INPUTFILE ] && [ ! -e $INPUTFILE"g" ] ;then      
+    
+    if [[ "$INPUTFILE" == *"g"  ]];then
+             
+         if [[ "$INPUTFILE" == *".g"  ]];then
+             printf "\t${CYAN}There is not file:${NC} $INPUTFILE \n"  
+         else 
+             printf "\t${CYAN}There is not file:${NC} $INPUTFILE"g" \n"
+         fi
+    else 
+       if [[ "$INPUTFILE" == *"."  ]];then
+        printf "\t${CYAN}There is not file:${NC} $INPUTFILE"g" \n"
+       else
+        printf "\t${CYAN}There is not file:${NC} $INPUTFILE.g \n"
+       fi 
+    fi  
+    printf "\t${RED}Stoping right now ...${NC}\n"
+exit 1
+fi
+#################################################
+#################################################
+ echo $TRUEFILE
+  rm -f errorPLOTLINE
+
+ if [ -e /tmp/checkg.pl ];then 
+   /tmp/checkg.pl $TRUEFILE 
+   if [ -e errorPLOTLINE ]; then
+    printf "\tHi... you are trying to plot a file that no exist...  \n"
+    printf "\tFIX your file:${GREEN} $TRUEFILE ${NC} \n\n"
+    printf "\t${RED}Stoping right now ...${NC}\n"
+     rm -f errorPLOTLINE
+    exit 127
+   fi
+ fi 
+   NAMENEW=${TRUEFILE%%.g}
+   printf "\t${CYAN}Taking file :${NC} ${GREEN}$TRUEFILE${NC} \n"  
+   printf "\t${CYAN}Taking file :${NC} ${GREEN}$NAMENEW${NC} \n"   
+
+   ############################
+   ############################
+   # NAMENEW sin g
+   # TRUEFILE con g
+   gnuplot $TRUEFILE
+   test_return $? "Gnuplot processing"
+   mpost --tex=latex fig.mp > /dev/null 2>&1
+   test_return $? "Metapost translation" 
+   latex /tmp/figlamp       > /dev/null 2>&1
+   test_return $? "LaTeX translation"
+   dvipdf figlamp aux.pdf   > /dev/null 2>&1
+   test_return $? "DVI to PDF (dvipdf)"  
+   #dvip   figlamp  -o $NAMENEW.ps > /dev/null 2>&1
+   #test_return $? "DVI to Postsript (dvips)" 
+   pdfcrop aux.pdf $NAMENEW.pdf > /dev/null 2>&1
+   test_return $? "pdfcrop"  
+   pdftops -eps $NAMENEW.pdf   > /dev/null 2>&1
+   test_return $? "pdftops"
+  
+
+  # xpdf $NAMENEW.pdf
+  # gv  --scale=1 $NAMENEW.eps
+   gv  --resize $NAMENEW.eps
+    rm -f fig.*
+   rm -f fig.0 fig.mp
+   rm -f figlamp.* aux*
+   rm -f fig.log
+   rm -f fig.mpx
+   if [ -e $NAMENEW.eps ];then
+    printf "\tOutput ${GREEN} $NAMENEW.eps ${NC}\n"
+   fi 
+   if [ -e $NAMENEW.pdf ];then  
+    printf "\tOutput ${GREEN} $NAMENEW.pdf ${NC}\n"  
+   fi 
+
+### great jl
